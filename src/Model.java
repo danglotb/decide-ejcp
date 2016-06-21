@@ -116,17 +116,31 @@ public class Model {
                 if (Arrays.equals(points[i], points[i + N_PTS])) {
 
                 } else {
-
+                    for (int j = i + 1 ; j < NUMPOINTS - N_PTS - 1 ; j++) {
+                        if (computeDistancePointToLine(points[j], computeEquationLine(points[i], points[i + N_PTS])) > DIST) {
+                            this.CMV[6] = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private double[] computeEquationLine(double[] p1, double[] p2) {
+        // ax + by + c = 0 : contains a, b and c
+        double[] equation = new double[3];
+        equation[0] = p1[1] - p2[1];
+        equation[1] = p1[0] - p2[0];
+        equation[2] = p1[0] * p2[1] - p2[0] * p1[1];
+        return equation;
     }
 
     /**
      * compute the distance between one point p1 and one line defined by l1 and l2
      */
     private double computeDistancePointToLine(double[] p1, double[] equationLine) {
-        return 0.0D;
+        return Math.abs(equationLine[0] * p1[0] + equationLine[1] * p1[1] + equationLine[2]) / Math.sqrt(Math.pow(equationLine[0], 2) + Math.pow(equationLine[1], 2));
     }
 
     /**
