@@ -11,6 +11,8 @@ import java.util.Arrays;
  */
 public class Model {
 
+    private static final int NUMBER_CLAUSE = 15;
+
     /**
      * input
      */
@@ -34,20 +36,71 @@ public class Model {
         this.NUMPOINTS = this.input.getInt("NUMPOINTS");
         this.parameters = this.input.getJSONObject("PARAMETERS");
         this.points = new double[NUMPOINTS][2];
-        this.PUV = new boolean[NUMPOINTS];
-        this.LCM = new String[NUMPOINTS][NUMPOINTS];
+        this.PUV = new boolean[NUMBER_CLAUSE];
+        this.LCM = new String[NUMBER_CLAUSE][NUMBER_CLAUSE];
+
         JSONArray arrayPoints = this.input.getJSONArray("points");
         JSONArray arrayPUV = this.input.getJSONArray("PUV");
         JSONObject arrayLCM = this.input.getJSONObject("LCM");
+
+        for (int i = 0; i < NUMBER_CLAUSE; i++) {
+            JSONArray arrayILCM = arrayLCM.getJSONArray(String.valueOf(i));
+            for (int j = 0; j < NUMBER_CLAUSE; j++)
+                this.LCM[i][j] = arrayILCM.getString(j);
+            this.PUV[i] = arrayPUV.getBoolean(i);
+        }
+
         for (int i = 0; i < NUMPOINTS; i++) {
             this.points[i][0] = arrayPoints.getJSONArray(i).getDouble(0);
             this.points[i][1] = arrayPoints.getJSONArray(i).getDouble(1);
-            this.PUV[i] = arrayPUV.getBoolean(i);
-            JSONArray arrayILCM = arrayLCM.getJSONArray(String.valueOf(i));
-            for (int j = 0; j < NUMPOINTS; j++)
-                this.LCM[i][j] = String.valueOf(arrayILCM.get(i));
         }
+
         this.computeCMV();
+        this.computePUM();
+        this.computeFUV();
+        System.out.println(this.decide());
+    }
+
+    private String decide() {
+        for (boolean b : this.FUV) {
+            if (!b)
+                return "No";
+        }
+        return "Yes";
+    }
+
+    private void computeFUV() {
+        this.FUV = new boolean[NUMBER_CLAUSE];
+        for (int i = 0; i < NUMBER_CLAUSE; i++) {
+            if (!this.PUV[i]) {
+                this.FUV[i] = true;
+            } else {
+                this.FUV[i] = true;
+                for (int j = 0; j < NUMBER_CLAUSE; j++) {
+                    if (j != i)
+                        this.FUV[i] &= this.PUM[i][j];
+                }
+            }
+        }
+    }
+
+    private void computePUM() {
+        this.PUM = new boolean[NUMBER_CLAUSE][NUMBER_CLAUSE];
+        for (int i = 0; i < this.LCM.length; i++) {
+            for (int j = 0; j < this.LCM[i].length; j++) {
+                switch (this.LCM[i][j]) {
+                    case "NOTUSED":
+                        this.PUM[i][j] = true;
+                        break;
+                    case "ANDD":
+                        this.PUM[i][j] = this.CMV[i] && this.CMV[j];
+                        break;
+                    case "ORR":
+                        this.PUM[i][j] = this.CMV[i] || this.CMV[j];
+                        break;
+                }
+            }
+        }
     }
 
     private void computeCMV() {
@@ -99,7 +152,7 @@ public class Model {
         //4
         int Q_PTS = this.parameters.getInt("Q_PTS");
         int QUADS = this.parameters.getInt("QUADS");
-
+        this.CMV[4] = true;
 
         //TODO
 
@@ -309,7 +362,9 @@ public class Model {
     }
 
     public static void main(String[] args) {
-        Model m = new Model("input/input0.json");
+        for (int i = 0; i < 20; i++) {
+            Model m = new Model("input/input" + i + ".json");
+        }
     }
 
 }
