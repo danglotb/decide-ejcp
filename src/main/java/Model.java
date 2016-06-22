@@ -55,13 +55,12 @@ public class Model {
             this.points[i][1] = arrayPoints.getJSONArray(i).getDouble(1);
         }
 
-        this.computeCMV();
-        this.computePUM();
-        this.computeFUV();
-        System.out.println(this.decide());
     }
 
     private String decide() {
+        this.computeCMV();
+        this.computePUM();
+        this.computeFUV();
         for (boolean b : this.FUV) {
             if (!b)
                 return "No";
@@ -362,9 +361,12 @@ public class Model {
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i < 20; i++) {
-            Model m = new Model("input/input" + i + ".json");
-        }
+        Model m;
+        if (args.length > 0)
+            m = new Model(args[0]);
+        else
+            m = new Model("input/input0.json");
+        System.out.println(m.decide());
     }
 
 }
