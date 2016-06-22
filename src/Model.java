@@ -98,6 +98,8 @@ public class Model {
         }
         //4
         int Q_PTS = this.parameters.getInt("Q_PTS");
+        int QUADS = this.parameters.getInt("QUADS");
+
 
         //TODO
 
@@ -111,24 +113,168 @@ public class Model {
         //6
         int N_PTS = this.parameters.getInt("N_PTS");
         double DIST = this.parameters.getDouble("DIST");
-        if (N_PTS <= 3 && N_PTS <= NUMPOINTS && NUMPOINTS <= 13) {
+        if (NUMPOINTS >= 3) {
             for (int i = 0; i < NUMPOINTS - N_PTS; i++) {
                 if (Arrays.equals(points[i], points[i + N_PTS])) {
-
+                    for (int j = i + 1; j < NUMPOINTS - N_PTS - 1; j++) {
+                        double d = computeDistancePointToPoint(points[i], points[j]);
+                        if (d > DIST) {
+                            this.CMV[6] = true;
+                            break;
+                        }
+                    }
                 } else {
-                    for (int j = i + 1 ; j < NUMPOINTS - N_PTS - 1 ; j++) {
+                    for (int j = i + 1; j < NUMPOINTS - N_PTS - 1; j++) {
                         if (computeDistancePointToLine(points[j], computeEquationLine(points[i], points[i + N_PTS])) > DIST) {
                             this.CMV[6] = true;
                             break;
                         }
                     }
                 }
+                if (this.CMV[6])
+                    break;
+            }
+        }
+        //7
+        int K_PTS = this.parameters.getInt("K_PTS");
+        if (NUMPOINTS >= 3) {
+            for (int i = 0; i < NUMPOINTS - K_PTS; i++) {
+                if (computeDistancePointToPoint(points[i], points[i + K_PTS]) > LENGTH1) {
+                    this.CMV[7] = true;
+                    break;
+                }
+            }
+        }
+        //8
+        int A_PTS = this.parameters.getInt("A_PTS");
+        int B_PTS = this.parameters.getInt("B_PTS");
+        if (NUMPOINTS >= 5) {
+            for (int i = 0; i < NUMPOINTS - (A_PTS + B_PTS); i++) {
+                double d1 = computeDistancePointToPoint(points[i], points[i + A_PTS]);
+                double d2 = computeDistancePointToPoint(points[i + A_PTS], points[i + B_PTS]);
+                if (d1 > RADIUS1 && d2 > RADIUS1) {
+                    this.CMV[8] = true;
+                    break;
+                }
+            }
+        }
+        //9
+        int C_PTS = this.parameters.getInt("C_PTS");
+        int D_PTS = this.parameters.getInt("D_PTS");
+        if (NUMPOINTS >= 5) {
+            for (int index = 0; index < this.NUMPOINTS - (C_PTS + D_PTS); index++) {
+                if (Arrays.equals(this.points[index], this.points[index + C_PTS]) ||
+                        Arrays.equals(this.points[index + C_PTS], this.points[index + D_PTS]) ||
+                        Arrays.equals(this.points[index], this.points[index + D_PTS]))
+                    continue;
+                double a = computeDistancePointToPoint(this.points[index], this.points[index + C_PTS]);
+                double b = computeDistancePointToPoint(this.points[index + C_PTS], this.points[index + C_PTS]);
+                double c = computeDistancePointToPoint(this.points[index], this.points[index + C_PTS]);
+                double angle = Math.cos(Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) / (2 * a * b);
+                if (angle < Math.PI - EPSILON || angle > Math.PI + EPSILON) {
+                    this.CMV[9] = true;
+                    break;
+                }
+            }
+        }
+        //10
+        int E_PTS = this.parameters.getInt("E_PTS");
+        int F_PTS = this.parameters.getInt("F_PTS");
+        if (NUMPOINTS >= 5) {
+            for (int index = 0; index < this.NUMPOINTS - (E_PTS + F_PTS); index++) {
+                double a = computeDistancePointToPoint(this.points[index], this.points[index + E_PTS]);
+                double b = computeDistancePointToPoint(this.points[index + E_PTS], this.points[index + F_PTS]);
+                double c = computeDistancePointToPoint(this.points[index], this.points[index + F_PTS]);
+                double s = (a + b + c) / 2.0D;
+                double area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+                if (area > AREA1) {
+                    this.CMV[10] = true;
+                    break;
+                }
+            }
+        }
+        //11
+        int G_PTS = this.parameters.getInt("G_PTS");
+        if (NUMPOINTS >= 3) {
+            for (int index = 0; index < this.NUMPOINTS - G_PTS; index++) {
+                if (this.points[index + G_PTS][0] - this.points[index][0] < 0) {
+                    this.CMV[11] = true;
+                    break;
+                }
+            }
+        }
+        //12
+        int LENGTH2 = this.parameters.getInt("LENGTH2");
+        if (NUMPOINTS >= 3) {
+            for (int index = 0; index < this.NUMPOINTS - K_PTS; index++) {
+                double d1 = computeDistancePointToPoint(this.points[index], this.points[index + K_PTS]);
+                if (d1 > LENGTH1) {
+                    for (int index1 = 0; index1 < this.NUMPOINTS - K_PTS; index1++) {
+                        double d2 = computeDistancePointToPoint(this.points[index1], this.points[index1 + K_PTS]);
+                        if (d2 < LENGTH2) {
+                            this.CMV[12] = true;
+                            break;
+                        }
+                    }
+                }
+                if (this.CMV[12])
+                    break;
+            }
+        }
+        //13
+        double RADIUS2 = this.parameters.getDouble("RADIUS2");
+        if (NUMPOINTS >= 5) {
+            for (int i = 0; i < NUMPOINTS - (A_PTS + B_PTS); i++) {
+                double d1 = computeDistancePointToPoint(this.points[i], this.points[i + A_PTS]);
+                double d2 = computeDistancePointToPoint(this.points[i + A_PTS], this.points[i + B_PTS]);
+                if (d1 > RADIUS1 && d2 > RADIUS1) {
+                    for (int i1 = 0; i1 < NUMPOINTS - (A_PTS + B_PTS); i1++) {
+                        double d3 = computeDistancePointToPoint(this.points[i1], this.points[i1 + A_PTS]);
+                        double d4 = computeDistancePointToPoint(this.points[i1 + A_PTS], this.points[i1 + B_PTS]);
+                        if (d3 <= RADIUS2 && d4 <= RADIUS2) {
+                            this.CMV[13] = true;
+                            break;
+                        }
+                    }
+                }
+                if (this.CMV[13])
+                    break;
+            }
+        }
+        //14
+        double AREA2 = this.parameters.getDouble("AREA2");
+        if (NUMPOINTS >= 5) {
+            for (int index = 0; index < this.NUMPOINTS - (E_PTS + F_PTS); index++) {
+                double a = computeDistancePointToPoint(this.points[index], this.points[index + E_PTS]);
+                double b = computeDistancePointToPoint(this.points[index + E_PTS], this.points[index + F_PTS]);
+                double c = computeDistancePointToPoint(this.points[index], this.points[index + F_PTS]);
+                double s = (a + b + c) / 2.0D;
+                double area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+                if (area > AREA1) {
+                    for (int index1 = 0; index1 < this.NUMPOINTS - (E_PTS + F_PTS); index1++) {
+                        double a1 = computeDistancePointToPoint(this.points[index1], this.points[index1 + E_PTS]);
+                        double b1 = computeDistancePointToPoint(this.points[index1 + E_PTS], this.points[index1 + F_PTS]);
+                        double c1 = computeDistancePointToPoint(this.points[index1], this.points[index1 + F_PTS]);
+                        double s1 = (a1 + b1 + c1) / 2.0D;
+                        double area2 = Math.sqrt(s1 * (s1 - a1) * (s1 - b1) * (s1 - c1));
+                        if (area2 > AREA2) {
+                            this.CMV[14] = true;
+                            break;
+                        }
+                    }
+                }
+                if (this.CMV[14])
+                    break;
             }
         }
     }
 
+    /**
+     * Compute the equation of a line formed by the two given points.
+     *
+     * @return the equation in an array of double
+     */
     private double[] computeEquationLine(double[] p1, double[] p2) {
-        // ax + by + c = 0 : contains a, b and c
         double[] equation = new double[3];
         equation[0] = p1[1] - p2[1];
         equation[1] = p1[0] - p2[0];
@@ -163,7 +309,7 @@ public class Model {
     }
 
     public static void main(String[] args) {
-        new Model("input/input0.json");
+        Model m = new Model("input/input0.json");
     }
 
 }
