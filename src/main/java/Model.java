@@ -1,7 +1,10 @@
+import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -151,9 +154,28 @@ public class Model {
         //4
         int Q_PTS = this.parameters.getInt("Q_PTS");
         int QUADS = this.parameters.getInt("QUADS");
-        this.CMV[4] = true;
+        for (int index = 0; index < this.NUMPOINTS - (Q_PTS - 1); index++) {
+            int lieCounter = 0;
+            int currentQuad = 1;
+            for (int ndx = index; ndx < (index + Q_PTS); ndx++) {
+                if (getQuadranNumber(this.points[ndx]) != currentQuad) {
+                    lieCounter++;
+                    if (lieCounter > QUADS) {
+                        this.CMV[4] = true;
+                        break;
+                    }
+                }
 
-        //TODO
+                currentQuad++;
+                if (currentQuad > 4) {
+                    currentQuad = 1;
+                }
+            }
+
+            if (lieCounter > 3) {
+                break;
+            }
+        }
 
         //5
         for (int index = 0; index < this.NUMPOINTS - 1; index++) {
@@ -348,6 +370,24 @@ public class Model {
         return Math.sqrt(Math.pow(p1[0] - p2[0], 2) + Math.pow(p1[1] - p2[1], 2));
     }
 
+    /**
+     * Return the quadran number for a given point
+     */
+    private int getQuadranNumber(double[] p) {
+        double x = p[0];
+        double y = p[1];
+
+        if (x >= 0 && y >= 0) {
+            return 1;
+        } else if (x < 0 && y >= 0) {
+            return 2;
+        } else if (x < 0 && y < 0) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
     private JSONObject readJSON(String path) {
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path));
@@ -361,12 +401,20 @@ public class Model {
     }
 
     public static void main(String[] args) {
-        Model m;
-        if (args.length > 0)
-            m = new Model(args[0]);
-        else
-            m = new Model("input/input0.json");
-        System.out.println(m.decide());
+        if (args.length > 0) {
+            Model m = new Model(args[0]);
+            System.out.println(m.decide());
+        }
+        else {
+            File folder = new File("input");
+            File[] listOfFiles = folder.listFiles();
+
+            for (File f : listOfFiles) {
+                Model m = new Model(f.getPath());
+                System.out.println(f.getName() + ": " + m.decide());
+            }
+        }
+
     }
 
 }
