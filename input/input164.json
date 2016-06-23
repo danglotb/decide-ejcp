@@ -1,0 +1,417 @@
+{
+ "random_seed": 3878514150, 
+ "PARAMETERS": {
+  "RADIUS1": 198460.867, 
+  "QUADS": 1, 
+  "RADIUS2": 356829.764, 
+  "DIST": 393922.193, 
+  "F_PTS": 3, 
+  "K_PTS": 2, 
+  "EPSILON": 0.332, 
+  "LENGTH1": 26053.199, 
+  "G_PTS": 16, 
+  "Q_PTS": 7, 
+  "N_PTS": 24, 
+  "C_PTS": 7, 
+  "AREA2": 80610.314, 
+  "LENGTH2": 296787.6, 
+  "B_PTS": 3, 
+  "D_PTS": 18, 
+  "AREA1": 867461.796, 
+  "A_PTS": 11, 
+  "E_PTS": 3
+ }, 
+ "NUMPOINTS": 29, 
+ "points": [
+  [
+   462161.023, 
+   -465260.366
+  ], 
+  [
+   -606910.367, 
+   938972.238
+  ], 
+  [
+   436816.51, 
+   664179.067
+  ], 
+  [
+   85030.632, 
+   855611.228
+  ], 
+  [
+   758669.384, 
+   -476983.664
+  ], 
+  [
+   353448.326, 
+   -648217.825
+  ], 
+  [
+   -606443.789, 
+   334990.711
+  ], 
+  [
+   501561.107, 
+   -987711.112
+  ], 
+  [
+   -462912.09, 
+   -231929.691
+  ], 
+  [
+   470836.239, 
+   -386719.924
+  ], 
+  [
+   -42101.105, 
+   200851.454
+  ], 
+  [
+   -17431.641, 
+   -735655.93
+  ], 
+  [
+   -841853.596, 
+   632606.191
+  ], 
+  [
+   -572176.453, 
+   336499.659
+  ], 
+  [
+   -248096.423, 
+   616669.2
+  ], 
+  [
+   958282.283, 
+   -554815.493
+  ], 
+  [
+   876191.939, 
+   506453.057
+  ], 
+  [
+   -484573.102, 
+   56536.493
+  ], 
+  [
+   -531791.37, 
+   813531.284
+  ], 
+  [
+   -49624.914, 
+   -713616.999
+  ], 
+  [
+   452058.232, 
+   -242715.099
+  ], 
+  [
+   281026.252, 
+   -775521.094
+  ], 
+  [
+   -650889.903, 
+   281679.351
+  ], 
+  [
+   297875.055, 
+   655693.753
+  ], 
+  [
+   -981202.0, 
+   172249.908
+  ], 
+  [
+   417225.558, 
+   -500419.663
+  ], 
+  [
+   -796859.792, 
+   673643.807
+  ], 
+  [
+   -582751.656, 
+   379848.304
+  ], 
+  [
+   -775743.21, 
+   982719.615
+  ]
+ ], 
+ "PUV": [
+  false, 
+  false, 
+  true, 
+  false, 
+  false, 
+  false, 
+  false, 
+  false, 
+  true, 
+  false, 
+  true, 
+  false, 
+  true, 
+  true, 
+  true
+ ], 
+ "LCM": {
+  "11": [
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED"
+  ], 
+  "10": [
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED"
+  ], 
+  "13": [
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR"
+  ], 
+  "12": [
+   "ORR", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD"
+  ], 
+  "14": [
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "ANDD"
+  ], 
+  "1": [
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ANDD", 
+   "ORR", 
+   "ORR", 
+   "ORR", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "ORR"
+  ], 
+  "0": [
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ANDD"
+  ], 
+  "3": [
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR"
+  ], 
+  "2": [
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED"
+  ], 
+  "5": [
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD"
+  ], 
+  "4": [
+   "ANDD", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ORR"
+  ], 
+  "7": [
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "ANDD", 
+   "ORR", 
+   "ANDD"
+  ], 
+  "6": [
+   "ANDD", 
+   "ORR", 
+   "ORR", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "ORR", 
+   "ANDD", 
+   "ANDD", 
+   "NOTUSED", 
+   "ORR", 
+   "ORR", 
+   "ORR"
+  ], 
+  "9": [
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD", 
+   "ANDD"
+  ], 
+  "8": [
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "ANDD", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ORR", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "NOTUSED", 
+   "ANDD"
+  ]
+ }
+}
