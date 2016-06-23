@@ -411,7 +411,7 @@ public class Model {
 
             for (File f : listOfFiles) {
                 Model m = new Model(f.getPath());
-                System.out.println(f.getName() + ": " + m.decide());
+                System.out.println(m.decide());
             }
         }
 
