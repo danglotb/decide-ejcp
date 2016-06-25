@@ -1,5 +1,3 @@
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -132,10 +130,15 @@ public class Model {
         //2
         double EPSILON = this.parameters.getDouble("EPSILON");
         for (int index = 0; index < this.NUMPOINTS - 2; index++) {
-            double a = computeDistancePointToPoint(this.points[index], this.points[index + 1]);
-            double b = computeDistancePointToPoint(this.points[index + 1], this.points[index + 2]);
-            double c = computeDistancePointToPoint(this.points[index], this.points[index + 2]);
-            double angle = Math.cos(Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) / (2 * a * b);
+            double[] p1 = this.points[index];
+            double[] p2 = this.points[index + 1];
+            double[] p3 = this.points[index + 2];
+            if (Arrays.equals(p1, p2) || Arrays.equals(p2, p3) || Arrays.equals(p1, p3))
+                continue;
+            double a = computeDistancePointToPoint(p1, p2);
+            double b = computeDistancePointToPoint(p2, p3);
+            double c = computeDistancePointToPoint(p1, p3);
+            double angle = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2)) / (2 * a * b));
             if (angle < Math.PI - EPSILON || angle > Math.PI + EPSILON) {
                 this.CMV[2] = true;
                 break;
@@ -244,14 +247,15 @@ public class Model {
         int D_PTS = this.parameters.getInt("D_PTS");
         if (NUMPOINTS >= 5) {
             for (int index = 0; index < this.NUMPOINTS - (C_PTS + D_PTS); index++) {
-                if (Arrays.equals(this.points[index], this.points[index + C_PTS]) ||
-                        Arrays.equals(this.points[index + C_PTS], this.points[index + D_PTS]) ||
-                        Arrays.equals(this.points[index], this.points[index + D_PTS]))
+                double[] p1 = this.points[index];
+                double[] p2 = this.points[index + C_PTS];
+                double[] p3 = this.points[index + C_PTS + D_PTS];
+                if (Arrays.equals(p1, p2) || Arrays.equals(p2, p3) || Arrays.equals(p1, p3))
                     continue;
-                double a = computeDistancePointToPoint(this.points[index], this.points[index + C_PTS]);
-                double b = computeDistancePointToPoint(this.points[index + C_PTS], this.points[index + C_PTS]);
-                double c = computeDistancePointToPoint(this.points[index], this.points[index + C_PTS]);
-                double angle = Math.cos(Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) / (2 * a * b);
+                double a = computeDistancePointToPoint(p1, p2);
+                double b = computeDistancePointToPoint(p2, p3);
+                double c = computeDistancePointToPoint(p1, p3);
+                double angle = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2)) / (2 * a * b));
                 if (angle < Math.PI - EPSILON || angle > Math.PI + EPSILON) {
                     this.CMV[9] = true;
                     break;
@@ -418,7 +422,7 @@ public class Model {
 
             for (File f : listOfFiles) {
                 Model m = new Model(f.getPath());
-                System.out.println(m.decide());
+                System.out.println(f.getName() + " " + m.decide());
             }
         }
 
