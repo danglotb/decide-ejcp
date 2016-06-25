@@ -230,7 +230,7 @@ public class Model {
                 double ox = (this.points[i][0] + this.points[i + A_PTS][0] + this.points[i + A_PTS + B_PTS][0]) / 3.0D;
                 double oy = (this.points[i][1] + this.points[i + A_PTS][1] + this.points[i + A_PTS + B_PTS][1]) / 3.0D;
                 double [] o = new double[] {ox, oy};
-                double d1 = computeDistancePointToPoint(points[i], o);z
+                double d1 = computeDistancePointToPoint(points[i], o);
                 double d2 = computeDistancePointToPoint(points[i + A_PTS], o);
                 double d3 = computeDistancePointToPoint(points[i + A_PTS + B_PTS], o);
                 if (d1 > RADIUS1 || d2 > RADIUS1 || d3 > RADIUS1) {
