@@ -227,9 +227,13 @@ public class Model {
         int B_PTS = this.parameters.getInt("B_PTS");
         if (NUMPOINTS >= 5) {
             for (int i = 0; i < NUMPOINTS - (A_PTS + B_PTS); i++) {
-                double d1 = computeDistancePointToPoint(points[i], points[i + A_PTS]);
-                double d2 = computeDistancePointToPoint(points[i + A_PTS], points[i + B_PTS]);
-                if (d1 > RADIUS1 && d2 > RADIUS1) {
+                double ox = (this.points[i][0] + this.points[i + A_PTS][0] + this.points[i + A_PTS + B_PTS][0]) / 3.0D;
+                double oy = (this.points[i][1] + this.points[i + A_PTS][1] + this.points[i + A_PTS + B_PTS][1]) / 3.0D;
+                double [] o = new double[] {ox, oy};
+                double d1 = computeDistancePointToPoint(points[i], o);
+                double d2 = computeDistancePointToPoint(points[i + A_PTS], o);
+                double d3 = computeDistancePointToPoint(points[i + A_PTS + B_PTS], o);
+                if (d1 > RADIUS1 && d2 > RADIUS1 && d3 > RADIUS1) {
                     this.CMV[8] = true;
                     break;
                 }
