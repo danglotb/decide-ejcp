@@ -118,9 +118,12 @@ public class Model {
         //1
         double RADIUS1 = this.parameters.getDouble("RADIUS1");
         for (int index = 0; index < this.NUMPOINTS - 2; index++) {
-            double a = computeDistancePointToPoint(this.points[index], this.points[index + 1]);
-            double b = computeDistancePointToPoint(this.points[index + 1], this.points[index + 2]);
-            double c = computeDistancePointToPoint(this.points[index], this.points[index + 2]);
+            double ox = (this.points[index][0] + this.points[index + 1][0] + this.points[index + 2][0]) / 3.0D;
+            double oy = (this.points[index][1] + this.points[index + 1][1] + this.points[index + 2][1]) / 3.0D;
+            double [] o = new double[]{ox, oy};
+            double a = computeDistancePointToPoint(this.points[index], o);
+            double b = computeDistancePointToPoint(this.points[index + 1], o);
+            double c = computeDistancePointToPoint(o, this.points[index + 2]);
             if (RADIUS1 < a && RADIUS1 < b && RADIUS1 < c) {
                 this.CMV[1] = true;
                 break;
