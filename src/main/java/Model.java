@@ -344,7 +344,7 @@ public class Model {
                         double c1 = computeDistancePointToPoint(this.points[index1], this.points[index1 + F_PTS]);
                         double s1 = (a1 + b1 + c1) / 2.0D;
                         double area2 = Math.sqrt(s1 * (s1 - a1) * (s1 - b1) * (s1 - c1));
-                        if (area2 > AREA2) {
+                        if (area2 < AREA2) {
                             this.CMV[14] = true;
                             break;
                         }
