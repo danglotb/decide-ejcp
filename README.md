@@ -5,5 +5,5 @@ N-version programming
 
 ```
 mvn clean install
-mvn compile exec:java -Dexec.mainClass="main.java.Model" -Dexec.args="input/input0.json" -quiet
+mvn compile exec:java -Dexec.mainClass="Model" -Dexec.args="input/input0.json" -quiet
 ```
